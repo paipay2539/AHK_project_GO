@@ -14,39 +14,34 @@ SetWinDelay, -1
 
 #Persistent
 #MaxThreadsPerHotkey 3
-CoordMode, ToolTip, Client   ; ใช้พิกัดแบบ Client
-OnExit, ExitSub              ; ฟังก์ชันเมื่อออกจากโปรแกรม
+CoordMode, ToolTip, Client
+OnExit, ExitSub
 
 ;######################## ตัวแปร ########################
-setPointArrayX := []
-setPointArrayY := []
-arrayCount := 0
-setPointCount := 0
+config := Object()
+config.skill := []
+config.skill.push(Object("x", 800, "y", 1000, "color", 0xF3D0CC, "key", 1))
+config.skill.push(Object("x", 840, "y", 1000, "color", 0xF3D0CC, "key", 2))
+config.skill.push(Object("x", 880, "y", 1000, "color", 0xF3D0CC, "key", 3))
+config.skill.push(Object("x", 920, "y", 1000, "color", 0xF3D0CC, "key", 4))
 
-targetColor := 0xF3D0CC   ; สีเป้าหมาย
-skillAct := 1             ; เปิดใช้การกดสกิล
+config.confirm := Object("x", 333, "y", 473, "color", 0x299CFF)
 
+config.restore := []
+config.restore.push(Object("x", 170, "y", 11, "color", 0x0000FF, "key", 5))
+config.restore.push(Object("x", 170, "y", 26, "color", 0xFFBD08, "key", 6))
+
+skillAct := 1
 Return
 
-;######################## กด F1 เพื่อดูตำแหน่งเมาส์และสี ########################
+;######################## F1 ดูตำแหน่งเมาส์ ########################
 F1::
     MouseGetPos, mouseX, mouseY
-    PixelGetColor, color, %mouseX%, %mouseY%
+    PixelGetColor, color, %mouseX%, %mouseY%, RGB
     Clipboard := "Position: (" mouseX ", " mouseY ") Color: " color
 Return
 
-;######################## กด F3 เพื่อดูสีจากตำแหน่งล่าสุด ########################
-F3::
-    PixelGetColor, color, %mouseX%, %mouseY%
-    Clipboard := "Position: (" mouseX ", " mouseY ") Color: " color
-Return
-
-;######################## แสดง ToolTip ทดสอบ ########################
-F5::
-    ShowToolTip("aaaa", 313, 540)
-Return
-
-;######################## รีโหลดสคริปต์ ########################
+;######################## รีโหลด ########################
 F2::Reload
 ~-::Reload
 
@@ -63,63 +58,56 @@ ExitSub:
     }
 ExitApp
 
-;######################## สลับเปิด/ปิด Loop เมื่อกด Space ########################
-~space::
-    PixelGetColor, color1, 800, 1000
-    PixelGetColor, color2, 840, 1000
-    PixelGetColor, color3, 880, 1000
-    PixelGetColor, color4, 920, 1000
-
+;######################## เปิด/ปิด loop ด้วย Space ########################
+~Space::
     active := !active
-
     if active {
         Sleep, 100
-        SetTimer, mainloop, 100, -2
-        SetTimer, restoreTask, 100, -1
+        SetTimer, mainloop, 100
+        SetTimer, restoreTask, 100
     } else {
         SetTimer, mainloop, Off
         SetTimer, restoreTask, Off
     }
 Return
 
-;######################## ฟังก์ชันแสดง ToolTip ########################
-ShowToolTip(text, x, y) {
-    ToolTip, %text%, %x%, %y%
-}
-
-;######################## Main loop ตรวจสอบการใช้งาน skill ########################
+;######################## main loop ########################
 mainloop:
-    checkCooldown(1, color1, 800, 1000)
-    checkCooldown(2, color2, 840, 1000)
-    checkCooldown(3, color3, 880, 1000)   
-    checkCooldown(4, color4, 920, 1000)
-
-    PixelGetColor, mainloopColor, 333, 473  ; ตรวจสีเพื่อคลิกยืนยัน
-    if (mainloopColor = 0x299CFF)
+    for index, skill in config.skill
     {
-        Click, 333, 473
+        checkCooldown(skill.key, skill.color, skill.x, skill.y)
+    }
+
+    ; แยกการเข้าถึง config.confirm
+    confirmX := config.confirm.x
+    confirmY := config.confirm.y
+    confirmColor := config.confirm.color
+
+    PixelGetColor, mainloopColor, confirmX, confirmY, RGB
+    if (mainloopColor = confirmColor)
+    {
+        Click, %confirmX%, %confirmY%
         Sleep, 500
-        Click, 333, 473
+        Click, %confirmX%, %confirmY%
         Sleep, 100
         Click, 500, 471
     }
 Return
 
-;######################## ตรวจสอบและกดปุ่มฟื้นพลังอัตโนมัติ ########################
+;######################## restore ########################
 restoreTask:
     IfWinNotActive, GhostOnline
         Return
 
-    PixelGetColor, restoreColor, 170, 11
-    if (restoreColor != 0x0000FF)
-        pressKeyFunction(5)
-
-    PixelGetColor, restoreColor, 170, 26
-    if (restoreColor != 0xFFBD08)
-        pressKeyFunction(6)
+    for index, restore in config.restore
+    {
+        PixelGetColor, restoreColor, restore.x, restore.y, RGB
+        if (restoreColor != restore.color)
+            pressKeyFunction(restore.key)
+    }
 Return
 
-;######################## ตรวจว่าผู้เล่นกดปุ่มเดินหรือปุ่มอื่นอยู่หรือไม่ ########################
+;######################## ตรวจปุ่ม ########################
 checkAnyKeyPress:
     GetKeyState, keyPressUp, Up
     GetKeyState, keyPressDown, Down
@@ -131,8 +119,9 @@ checkAnyKeyPress:
     anyKeyPress := (keyPressUp = "D" || keyPressDown = "D" || keyPressRight = "D" || keyPressLeft = "D" || keyPress1 = "D" || keyPress2 = "D") ? 1 : 0
 Return
 
-;######################## ฟังก์ชันกดปุ่มตามที่กำหนด ########################
-pressKeyFunction(buttonTarget, holdTime := 100, cooldownTime := 10) {
+;######################## กดปุ่ม ########################
+pressKeyFunction(buttonTarget, holdTime := 100, cooldownTime := 10)
+{
     SendInput, {%buttonTarget% down}
     Sleep, %holdTime%
     SendInput, {%buttonTarget% up}
@@ -140,14 +129,15 @@ pressKeyFunction(buttonTarget, holdTime := 100, cooldownTime := 10) {
     Return
 }
 
-;######################## ตรวจสอบคูลดาวน์สกิลและกดใช้ ########################
-checkCooldown(targetKey, checkColor, checkPointX, checkPointY) {
+;######################## ตรวจ cooldown skill ########################
+checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
+{
     gosub checkAnyKeyPress
-    Global anyKeyPress, skillAct
+    global anyKeyPress, skillAct
 
     if (anyKeyPress = 0 && skillAct = 1)
     {
-        PixelGetColor, color, checkPointX, checkPointY
+        PixelGetColor, color, checkPointX, checkPointY, RGB
         if (color = checkColor)
         {
             retryCounter := 0
@@ -155,7 +145,7 @@ checkCooldown(targetKey, checkColor, checkPointX, checkPointY) {
                 pressKeyFunction(targetKey)
                 retryCounter++
                 pressKeyFunction("control")
-                PixelGetColor, color, checkPointX, checkPointY
+                PixelGetColor, color, checkPointX, checkPointY, RGB
                 if (color != checkColor || retryCounter > 10)
                     Break
             }
