@@ -20,16 +20,16 @@ OnExit, ExitSub
 ;######################## ตัวแปร ########################
 config := Object()
 config.skill := []
-config.skill.push(Object("x", 800, "y", 1000, "color", 0xF3D0CC, "key", 1))
-config.skill.push(Object("x", 840, "y", 1000, "color", 0xF3D0CC, "key", 2))
-config.skill.push(Object("x", 880, "y", 1000, "color", 0xF3D0CC, "key", 3))
-config.skill.push(Object("x", 920, "y", 1000, "color", 0xF3D0CC, "key", 4))
+config.skill.push(Object("x", 800, "y", 1000, "color", "0xF3D0CC", "key", 1))
+config.skill.push(Object("x", 840, "y", 1000, "color", "0xF3D0CC", "key", 2))
+config.skill.push(Object("x", 880, "y", 1000, "color", "0xF3D0CC", "key", 3))
+config.skill.push(Object("x", 920, "y", 1000, "color", "0xF3D0CC", "key", 4))
 
-config.confirm := Object("x", 333, "y", 473, "color", 0x299CFF)
+config.confirm := Object("x", 333, "y", 473, "color", "0x299CFF")
 
 config.restore := []
-config.restore.push(Object("x", 170, "y", 11, "color", 0x0000FF, "key", 5))
-config.restore.push(Object("x", 170, "y", 26, "color", 0xFFBD08, "key", 6))
+config.restore.push(Object("x", 170, "y", 11, "color", "0x0000FF", "key", 5))
+config.restore.push(Object("x", 170, "y", 26, "color", "0xFFBD08", "key", 6))
 
 skillAct := 1
 Return
@@ -37,7 +37,7 @@ Return
 ;######################## F1 ดูตำแหน่งเมาส์ ########################
 F1::
     MouseGetPos, mouseX, mouseY
-    PixelGetColor, color, %mouseX%, %mouseY%, RGB
+    PixelGetColor, color, %mouseX%, %mouseY%
     Clipboard := "Position: (" mouseX ", " mouseY ") Color: " color
 Return
 
@@ -63,7 +63,7 @@ ExitApp
     ; อัปเดต config.skill.color
     for index, skill in config.skill
     {
-        PixelGetColor, newColor, skill.x, skill.y, RGB
+        PixelGetColor, newColor, skill.x, skill.y
         skill.color := newColor
     }
     active := !active
@@ -89,7 +89,7 @@ mainloop:
     confirmY := config.confirm.y
     confirmColor := config.confirm.color
 
-    PixelGetColor, mainloopColor, confirmX, confirmY, RGB
+    PixelGetColor, mainloopColor, confirmX, confirmY
     if (mainloopColor = confirmColor)
     {
         Click, %confirmX%, %confirmY%
@@ -107,7 +107,7 @@ restoreTask:
 
     for index, restore in config.restore
     {
-        PixelGetColor, restoreColor, restore.x, restore.y, RGB
+        PixelGetColor, restoreColor, restore.x, restore.y
         if (restoreColor != restore.color)
             pressKeyFunction(restore.key)
     }
@@ -143,7 +143,7 @@ checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
 
     if (anyKeyPress = 0 && skillAct = 1)
     {
-        PixelGetColor, color, checkPointX, checkPointY, RGB
+        PixelGetColor, color, checkPointX, checkPointY
         if (color = checkColor)
         {
             retryCounter := 0
@@ -151,7 +151,7 @@ checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
                 pressKeyFunction(targetKey)
                 retryCounter++
                 pressKeyFunction("control")
-                PixelGetColor, color, checkPointX, checkPointY, RGB
+                PixelGetColor, color, checkPointX, checkPointY
                 if (color != checkColor || retryCounter > 10)
                     Break
             }
