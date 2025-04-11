@@ -60,6 +60,12 @@ ExitApp
 
 ;######################## เปิด/ปิด loop ด้วย Space ########################
 ~Space::
+    ; อัปเดต config.skill.color
+    for index, skill in config.skill
+    {
+        PixelGetColor, newColor, skill.x, skill.y, RGB
+        skill.color := newColor
+    }
     active := !active
     if active {
         Sleep, 100
