@@ -3,7 +3,7 @@ skillLoop() {
     IfWinNotActive, GhostOnline
         Return
     ;######################### sigle thread method #########################
-    static count := 00
+    static count := 0
     count := Mod(count, 4) + 1 ; นับ 1 ถึง 4 แล้ววนกลับมา 1
     checkCooldown(config.skill[count].key, config.skill[count].color, config.skill[count].x, config.skill[count].y)
     ;######################### multi-thread method #########################
@@ -53,15 +53,38 @@ pickItemLoop() {
     IfWinNotActive, GhostOnline
         Return
     pressKeyFunction("control")
+    pressKeyFunction("control")
+    pressKeyFunction("control")
+    pressKeyFunction("control")
+    pressKeyFunction("control")
+    pressKeyFunction("control")
+}
+
+MoveLoop() {
+    global config
+    IfWinNotActive, GhostOnline
+        Return
+
+    static movePattern := ["left", "left", "left", "left", "left", "right", "right", "right", "right", "right"]
+    static index := 0
+    index := Mod(index, movePattern.MaxIndex()) + 1
+    pressKeyFunction(movePattern[index],500)
 }
 
 masterLoop() {
+    skillLoop()
+    skillLoop()
+    qqCheckLoop()
+    pickItemLoop()
+    MoveLoop()
+    /*
     static count := 0
     count++
     ;lowFreqTask()
     if (Mod(count, 1) = 0)
-        restoreLoop()
-    ;midFreqTask()    
-    if (Mod(count, 1) = 0)
         skillLoop()
+    ;midFreqTask()    
+    if (Mod(count, 2) = 0)
+        skillLoop()
+    */
 }

@@ -54,29 +54,21 @@ ExitApp
         skill.color := newColor
     }
     active := !active
-
-    ;######################### sigle thread method #########################
-    /*
-    if active {
-        Sleep, 100
-        SetTimer, masterLoop, 10
-    } else {
-        SetTimer, masterLoop, Off
-    }
-    */
-
-    ;######################### multi-thread method #########################
     if active {
         Sleep, 100
         SetTimer, restoreLoop, 100, -1
-        SetTimer, skillLoop, 50, -2
-        SetTimer, qqCheckLoop, 100, -3
-        SetTimer, pickItemLoop, 100, -4
+        SetTimer, masterLoop, 10, -2
+        ;SetTimer, skillLoop, 10, -2
+        ;SetTimer, qqCheckLoop, 100, -3
+        ;SetTimer, pickItemLoop, 500, -4
+        ;SetTimer, MoveLoop, 100, -5
     } else {
         SetTimer, restoreLoop, Off
-        SetTimer, skillLoop, Off
-        SetTimer, qqCheckLoop, Off
-        SetTimer, pickItemLoop, Off
+        SetTimer, masterLoop, Off
+        ;SetTimer, skillLoop, Off
+        ;SetTimer, qqCheckLoop, Off
+        ;SetTimer, pickItemLoop, Off
+        ;SetTimer, MoveLoop, Off
     }
 Return
 
@@ -91,3 +83,4 @@ Critical, On
 SendInput, {control up} ; ยก Control ขึ้น
 pressKeyFunction("down")
 Return
+
