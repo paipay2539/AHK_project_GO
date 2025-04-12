@@ -18,7 +18,7 @@ CoordMode, ToolTip, Client
 OnExit, ExitSub
 
 #Include %A_ScriptDir%\define.ahk
-#Include %A_ScriptDir%\mainloop_restore.ahk
+#Include %A_ScriptDir%\loop.ahk
 #Include %A_ScriptDir%\key_functions.ahk
 
 ;######################## F1 ดูตำแหน่งเมาส์ ########################

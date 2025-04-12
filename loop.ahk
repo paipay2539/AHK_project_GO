@@ -16,7 +16,7 @@ mainloop:
         Sleep, 500
         Click, %confirmX%, %confirmY%
         Sleep, 100
-        Click, 500, 471
+        Click, %confirmX% * 1.5, %confirmY%
     }
 Return
 
