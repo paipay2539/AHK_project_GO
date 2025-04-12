@@ -54,12 +54,40 @@ ExitApp
         skill.color := newColor
     }
     active := !active
+
+    ;######################### sigle thread method #########################
+    /*
     if active {
         Sleep, 100
-        SetTimer, mainloop, 100
-        SetTimer, restoreTask, 100
+        SetTimer, masterLoop, 10
     } else {
-        SetTimer, mainloop, Off
-        SetTimer, restoreTask, Off
+        SetTimer, masterLoop, Off
     }
+    */
+
+    ;######################### multi-thread method #########################
+    if active {
+        Sleep, 100
+        SetTimer, restoreLoop, 100, -1
+        SetTimer, skillLoop, 50, -2
+        SetTimer, qqCheckLoop, 100, -3
+        SetTimer, pickItemLoop, 100, -4
+    } else {
+        SetTimer, restoreLoop, Off
+        SetTimer, skillLoop, Off
+        SetTimer, qqCheckLoop, Off
+        SetTimer, pickItemLoop, Off
+    }
+Return
+
+Up:: 
+Critical, On
+SendInput, {control up} ; ยก Control ขึ้น
+pressKeyFunction("up")
+Return
+
+Down:: 
+Critical, On
+SendInput, {control up} ; ยก Control ขึ้น
+pressKeyFunction("down")
 Return
