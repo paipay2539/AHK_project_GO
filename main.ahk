@@ -17,22 +17,9 @@ SetWinDelay, -1
 CoordMode, ToolTip, Client
 OnExit, ExitSub
 
-;######################## ตัวแปร ########################
-config := Object()
-config.skill := []
-config.skill.push(Object("x", 800, "y", 1000, "color", "0xF3D0CC", "key", 1))
-config.skill.push(Object("x", 840, "y", 1000, "color", "0xF3D0CC", "key", 2))
-config.skill.push(Object("x", 880, "y", 1000, "color", "0xF3D0CC", "key", 3))
-config.skill.push(Object("x", 920, "y", 1000, "color", "0xF3D0CC", "key", 4))
-
-config.confirm := Object("x", 333, "y", 473, "color", "0x299CFF")
-
-config.restore := []
-config.restore.push(Object("x", 170, "y", 11, "color", "0x0000FF", "key", 5))
-config.restore.push(Object("x", 170, "y", 26, "color", "0xFFBD08", "key", 6))
-
-skillAct := 1
-Return
+#Include %A_ScriptDir%\define.ahk
+#Include %A_ScriptDir%\mainloop_restore.ahk
+#Include %A_ScriptDir%\key_functions.ahk
 
 ;######################## F1 ดูตำแหน่งเมาส์ ########################
 F1::
@@ -60,7 +47,7 @@ ExitApp
 
 ;######################## เปิด/ปิด loop ด้วย Space ########################
 ~Space::
-    ; อัปเดต config.skill.color
+    global config, active
     for index, skill in config.skill
     {
         PixelGetColor, newColor, skill.x, skill.y
@@ -76,86 +63,3 @@ ExitApp
         SetTimer, restoreTask, Off
     }
 Return
-
-;######################## main loop ########################
-mainloop:
-    for index, skill in config.skill
-    {
-        checkCooldown(skill.key, skill.color, skill.x, skill.y)
-    }
-
-    ; แยกการเข้าถึง config.confirm
-    confirmX := config.confirm.x
-    confirmY := config.confirm.y
-    confirmColor := config.confirm.color
-
-    PixelGetColor, mainloopColor, confirmX, confirmY
-    if (mainloopColor = confirmColor)
-    {
-        Click, %confirmX%, %confirmY%
-        Sleep, 500
-        Click, %confirmX%, %confirmY%
-        Sleep, 100
-        Click, 500, 471
-    }
-Return
-
-;######################## restore ########################
-restoreTask:
-    IfWinNotActive, GhostOnline
-        Return
-
-    for index, restore in config.restore
-    {
-        PixelGetColor, restoreColor, restore.x, restore.y
-        if (restoreColor != restore.color)
-            pressKeyFunction(restore.key)
-    }
-Return
-
-;######################## ตรวจปุ่ม ########################
-checkAnyKeyPress:
-    GetKeyState, keyPressUp, Up
-    GetKeyState, keyPressDown, Down
-    GetKeyState, keyPressRight, Right
-    GetKeyState, keyPressLeft, Left
-    GetKeyState, keyPress1, Space
-    GetKeyState, keyPress2, Control
-
-    anyKeyPress := (keyPressUp = "D" || keyPressDown = "D" || keyPressRight = "D" || keyPressLeft = "D" || keyPress1 = "D" || keyPress2 = "D") ? 1 : 0
-Return
-
-;######################## กดปุ่ม ########################
-pressKeyFunction(buttonTarget, holdTime := 100, cooldownTime := 10)
-{
-    SendInput, {%buttonTarget% down}
-    Sleep, %holdTime%
-    SendInput, {%buttonTarget% up}
-    Sleep, %cooldownTime%
-    Return
-}
-
-;######################## ตรวจ cooldown skill ########################
-checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
-{
-    gosub checkAnyKeyPress
-    global anyKeyPress, skillAct
-
-    if (anyKeyPress = 0 && skillAct = 1)
-    {
-        PixelGetColor, color, checkPointX, checkPointY
-        if (color = checkColor)
-        {
-            retryCounter := 0
-            Loop {
-                pressKeyFunction(targetKey)
-                retryCounter++
-                pressKeyFunction("control")
-                PixelGetColor, color, checkPointX, checkPointY
-                if (color != checkColor || retryCounter > 10)
-                    Break
-            }
-        }
-    }
-Return
-}
