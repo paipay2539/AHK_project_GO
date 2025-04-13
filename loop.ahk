@@ -52,31 +52,50 @@ pickItemLoop() {
     global config
     IfWinNotActive, GhostOnline
         Return
-    pressKeyFunction("control")
-    pressKeyFunction("control")
-    pressKeyFunction("control")
-    pressKeyFunction("control")
-    pressKeyFunction("control")
-    pressKeyFunction("control")
+    Loop, 6
+    {
+        pressKeyFunction("control",50)
+    }
 }
 
 MoveLoop() {
     global config
     IfWinNotActive, GhostOnline
         Return
+    if (checkAnyKeyPress() = 0)
+    {
+        static movePattern := ["left", "right", "right" ,"left"]
+        static index := 0
+        index := Mod(index, movePattern.MaxIndex()) + 1
+        pressKeyFunction(movePattern[index],400)
+    }
 
-    static movePattern := ["left", "left", "left", "left", "left", "right", "right", "right", "right", "right"]
-    static index := 0
-    index := Mod(index, movePattern.MaxIndex()) + 1
-    pressKeyFunction(movePattern[index],500)
+}
+
+buffLoop() {
+    global config
+    IfWinNotActive, GhostOnline
+        Return
+    Loop, 6
+    {
+        pressKeyFunction("v",50)
+    }
 }
 
 masterLoop() {
-    skillLoop()
-    skillLoop()
+    Loop, 8 
+    {
+        skillLoop()
+    }
     qqCheckLoop()
     pickItemLoop()
-    MoveLoop()
+
+    global MoveEnable
+    if (moveEnable) 
+    {  
+        MoveLoop()
+    }
+
     /*
     static count := 0
     count++

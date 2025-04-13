@@ -14,3 +14,9 @@ config.restore.push(Object("x", 170, "y", 26, "color", "0xFFBD08", "key", 6))
 
 skillAct := 1
 active := false
+
+SetEnglishLayout() {
+    hwnd := WinActive("A")
+    ; 0x50 is WM_INPUTLANGCHANGEREQUEST
+    PostMessage, 0x50, 0, 0x04090409,, ahk_id %hwnd%
+}

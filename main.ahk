@@ -29,8 +29,15 @@ F1::
 Return
 
 ;######################## รีโหลด ########################
-F2::Reload
-~-::Reload
+F2::
+    Loop, 0xFF
+    {
+        Key := Format("VK{:02X}", A_Index)
+        If GetKeyState(Key)
+            Send, {%Key% Up}
+    }
+Reload
+Return
 
 ;######################## ออกจากโปรแกรม ########################
 F12::ExitApp
@@ -46,8 +53,12 @@ ExitSub:
 ExitApp
 
 ;######################## เปิด/ปิด loop ด้วย Space ########################
+~XButton1::global moveEnable := 0
+~XButton2::global moveEnable := 1
 ~Space::
-    global config, active
+    global config, active, moveEnable
+    SetEnglishLayout()
+
     for index, skill in config.skill
     {
         PixelGetColor, newColor, skill.x, skill.y
@@ -56,19 +67,13 @@ ExitApp
     active := !active
     if active {
         Sleep, 100
+        SetTimer, buffLoop, 60000, 0
         SetTimer, restoreLoop, 100, -1
         SetTimer, masterLoop, 10, -2
-        ;SetTimer, skillLoop, 10, -2
-        ;SetTimer, qqCheckLoop, 100, -3
-        ;SetTimer, pickItemLoop, 500, -4
-        ;SetTimer, MoveLoop, 100, -5
     } else {
+        SetTimer, buffLoop, Off
         SetTimer, restoreLoop, Off
         SetTimer, masterLoop, Off
-        ;SetTimer, skillLoop, Off
-        ;SetTimer, qqCheckLoop, Off
-        ;SetTimer, pickItemLoop, Off
-        ;SetTimer, MoveLoop, Off
     }
 Return
 
@@ -83,4 +88,3 @@ Critical, On
 SendInput, {control up} ; ยก Control ขึ้น
 pressKeyFunction("down")
 Return
-

@@ -1,6 +1,5 @@
 checkAnyKeyPress()
 {
-    global anyKeyPress
     GetKeyState, keyPressUp, Up
     GetKeyState, keyPressDown, Down
     GetKeyState, keyPressRight, Right
@@ -10,7 +9,7 @@ checkAnyKeyPress()
     GetKeyState, keyPressV, V
     GetKeyState, keyPressB, B
     GetKeyState, keyPressN, N
-    anyKeyPress := ( keyPressUp = "D" || keyPressDown = "D" || keyPressRight = "D" || keyPressLeft = "D" || keyPress1 = "D" || keyPress2 = "D" || keyPressV = "D" || keyPressB = "D" || keyPressN = "D") ? 1 : 0
+    return (keyPressUp = "D" || keyPressDown = "D" || keyPressRight = "D" || keyPressLeft = "D" || keyPress1 = "D" || keyPress2 = "D" || keyPressV = "D" || keyPressB = "D" || keyPressN = "D") ? 1 : 0
 }
 
 pressKeyFunction(buttonTarget, holdTime := 100, cooldownTime := 10)
@@ -23,10 +22,8 @@ pressKeyFunction(buttonTarget, holdTime := 100, cooldownTime := 10)
 
 checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
 {
-    checkAnyKeyPress()
-    global anyKeyPress, skillAct
-
-    if (anyKeyPress = 0 && skillAct = 1)
+    global skillAct
+    if (checkAnyKeyPress() = 0 && skillAct = 1)
     {
         PixelGetColor, color, checkPointX, checkPointY
         if (color = checkColor)
