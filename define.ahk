@@ -12,6 +12,8 @@ config.restore := []
 config.restore.push(Object("x", 170, "y", 11, "color", "0x0000FF", "key", 5))
 config.restore.push(Object("x", 170, "y", 26, "color", "0xFFBD08", "key", 6))
 
+pixelCheck := Object("color", 0x0000F7, "x1", 1700, "y1", 40, "x2", 1900, "y2", 150)
+
 skillAct := 1
 active := false
 

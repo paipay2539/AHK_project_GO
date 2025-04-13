@@ -67,11 +67,13 @@ ExitApp
     active := !active
     if active {
         Sleep, 100
-        SetTimer, buffLoop, 60000, 0
-        SetTimer, restoreLoop, 100, -1
-        SetTimer, masterLoop, 10, -2
+        SetTimer, buffLoop, 60000, -1
+        SetTimer, humanCheckLoop, 10000, -2 
+        SetTimer, restoreLoop, 100, -3
+        SetTimer, masterLoop, 10, -4
     } else {
         SetTimer, buffLoop, Off
+        SetTimer, humanCheckLoop, Off
         SetTimer, restoreLoop, Off
         SetTimer, masterLoop, Off
     }
