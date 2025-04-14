@@ -43,3 +43,14 @@ checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
         SendInput, {control up}
     }
 }
+
+UpAllKeys()
+{
+    clipboard := ""
+    Loop, 0xFF
+    {
+        Key := Format("VK{:02X}", A_Index)
+        If GetKeyState(Key)
+            Send, {%Key% Up}
+    }
+}

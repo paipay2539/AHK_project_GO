@@ -15,7 +15,6 @@ SetWinDelay, -1
 #Persistent
 #MaxThreadsPerHotkey 1
 CoordMode, ToolTip, Client
-OnExit, ExitSub
 
 #Include %A_ScriptDir%\define.ahk
 #Include %A_ScriptDir%\loop.ahk
@@ -30,12 +29,7 @@ Return
 
 ;######################## รีโหลด ########################
 F2::
-    Loop, 0xFF
-    {
-        Key := Format("VK{:02X}", A_Index)
-        If GetKeyState(Key)
-            Send, {%Key% Up}
-    }
+UpAllKeys()
 Reload
 Return
 
@@ -58,16 +52,8 @@ F4::
 Return
 
 ;######################## ออกจากโปรแกรม ########################
-F12::ExitApp
-
-ExitSub:
-    clipboard := ""
-    Loop, 0xFF
-    {
-        Key := Format("VK{:02X}", A_Index)
-        If GetKeyState(Key)
-            Send, {%Key% Up}
-    }
+F12::
+UpAllKeys()
 ExitApp
 
 ;######################## เปิด/ปิด loop ด้วย Space ########################
