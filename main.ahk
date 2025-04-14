@@ -13,13 +13,13 @@ SetDefaultMouseSpeed, 0
 SetWinDelay, -1
 
 #Persistent
-#MaxThreadsPerHotkey 3
+#MaxThreadsPerHotkey 1
 CoordMode, ToolTip, Client
 OnExit, ExitSub
 
 #Include %A_ScriptDir%\define.ahk
 #Include %A_ScriptDir%\loop.ahk
-#Include %A_ScriptDir%\key_functions.ahk
+#Include %A_ScriptDir%\functions.ahk
 
 ;######################## F1 ดูตำแหน่งเมาส์ ########################
 F1::
@@ -37,6 +37,24 @@ F2::
             Send, {%Key% Up}
     }
 Reload
+Return
+
+;######################## Debug ########################
+F3::
+    ; ดึงขนาดหน้าจอ
+    SysGet, screenWidth, 78
+    SysGet, screenHeight, 79
+
+    ; คำนวณตำแหน่งกลางจอ
+    centerX := screenWidth // 2
+    centerY := screenHeight // 2
+
+    ; แสดง ToolTip กลางจอ
+    ToolTip, %color%, %centerX%, %centerY%
+    Sleep, 1000 ; แสดง ToolTip เป็นเวลา 2 วินาที
+    ToolTip ; ซ่อน ToolTip
+Return
+F4::
 Return
 
 ;######################## ออกจากโปรแกรม ########################

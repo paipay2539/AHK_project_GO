@@ -38,4 +38,8 @@ checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
             }
         }
     }
+    else
+    {
+        SendInput, {control up}
+    }
 }
