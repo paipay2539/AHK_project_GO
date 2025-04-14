@@ -1,17 +1,6 @@
-﻿#NoEnv
-#MaxHotkeysPerInterval 99000000
-#HotkeyInterval 99000000
+﻿;######################## ตั้งค่าเริ่มต้น ########################
+#NoEnv
 #KeyHistory 0
-
-;######################## ตั้งค่าเริ่มต้น ########################
-ListLines Off
-Process, Priority, , A
-SetBatchLines, -1
-SetKeyDelay, -1, -1
-SetMouseDelay, -1
-SetDefaultMouseSpeed, 0
-SetWinDelay, -1
-
 #Persistent
 #MaxThreadsPerHotkey 1
 CoordMode, ToolTip, Client
@@ -19,6 +8,7 @@ CoordMode, ToolTip, Client
 #Include %A_ScriptDir%\define.ahk
 #Include %A_ScriptDir%\loop.ahk
 #Include %A_ScriptDir%\functions.ahk
+#Include %A_ScriptDir%\movement.ahk
 
 ;######################## F1 ดูตำแหน่งเมาส์ ########################
 F1::
@@ -34,7 +24,7 @@ Reload
 Return
 
 ;######################## Debug ########################
-F3::
+F3::movementJugde("upup")
     ; ดึงขนาดหน้าจอ
     SysGet, screenWidth, 78
     SysGet, screenHeight, 79

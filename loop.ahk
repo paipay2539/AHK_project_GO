@@ -54,10 +54,12 @@ MoveLoop() {
         Return
     if (checkAnyKeyPress() = 0)
     {
-        static movePattern := ["left", "right", "right", "left"]
+        static movePattern := ["left", "upup", "right", "right", "down", "superup"]
+        ;static movePattern := ["left", "right", "right", "left"]
         static index := 0
         index := Mod(index, movePattern.MaxIndex()) + 1
-        pressKeyFunction(movePattern[index], 400)
+        Sleep, 800
+        movementJugde(movePattern[index])
     }
     else {
         SendInput, {control up}
