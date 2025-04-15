@@ -39,8 +39,34 @@ F3::movementJugde("upup")
     ToolTip ; ซ่อน ToolTip
 Return
 F4::
+    centerX, centerY  := currentPosition()
+    MsgBox, %centerX%
 Return
 
+;######################## Get position ########################
+F5::
+    global targetPositions
+    if !IsObject(targetPositions) ; ตรวจสอบว่าตัวแปร targetPositions ถูกสร้างหรือยัง
+        targetPositions := [] ; สร้าง array ถ้ายังไม่มี
+
+    ; ดึงตำแหน่งเมาส์ปัจจุบัน
+    MouseGetPos, mouseX, mouseY
+
+    ; เพิ่มตำแหน่งใหม่เข้าไปใน array
+    targetPositions.Push({x: mouseX, y: mouseY})
+
+    ; สร้างข้อความสำหรับคลิปบอร์ด
+    clipboardText := "config.targetPosition := ["
+    for index, position in targetPositions {
+        clipboardText .= "{x: " position.x ", y: " position.y "}"
+        if (index < targetPositions.MaxIndex()) ; เพิ่มเครื่องหมาย ',' ถ้าไม่ใช่ตำแหน่งสุดท้าย
+            clipboardText .= ","
+    }
+    clipboardText .= "]"
+
+    ; อัปเดตข้อความในคลิปบอร์ด
+    Clipboard := clipboardText
+Return
 ;######################## ออกจากโปรแกรม ########################
 F12::
 UpAllKeys()
@@ -84,3 +110,5 @@ Critical, On
 SendInput, {control up} ; ยก Control ขึ้น
 pressKeyFunction("down")
 Return
+
+

@@ -29,3 +29,15 @@ movementJugde(movePattern, horizontalHoldTime := 400, verticalHoldTime := 400) {
         pressKeyFunction(movePattern, horizontalHoldTime) ; กดปุ่ม "left" หรือ "right"
     }
 }
+
+currentPosition(ByRef x, ByRef y) {
+    global config
+    PixelSearch, x, y, config.miniMapWindow.x1, config.miniMapWindow.y1, config.miniMapWindow.x2, config.miniMapWindow.y2, config.miniMapWindow.color, 0, fast
+    if (ErrorLevel = 0) {
+        Return true ; คืนค่า true หากพบพิกเซล
+    } else {
+        debegBeep2()
+        Return false ; คืนค่า false หากไม่พบพิกเซล
+    }
+}
+

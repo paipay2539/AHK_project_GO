@@ -77,13 +77,11 @@ buffLoop() {
 }
 
 humanCheckLoop() {
-    global pixelCheck, config
-    PixelSearch, foundX, foundY, pixelCheck.x1, pixelCheck.y1, pixelCheck.x2, pixelCheck.y2, pixelCheck.color, 0, fast
+    global config
+    PixelSearch, foundX, foundY, config.pixelCheck.x1, config.pixelCheck.y1, config.pixelCheck.x2, config.pixelCheck.y2, config.pixelCheck.color, 0, fast
     if (ErrorLevel = 0)
     {
-        SoundBeep, 2000, 100
-        SoundBeep, 2500, 100
-        SoundBeep, 3000, 100
+        debegBeep1()
     }
 }
 
