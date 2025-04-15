@@ -55,7 +55,7 @@ moveLoop() {
     if (checkAnyKeyPress() = 0)
     {
         Sleep, % config.delayAfterSkillKeys
-        openLoopNavigate()
+        ;openLoopNavigate()
         closedLoopNavigate()
     }
     else {
@@ -83,7 +83,7 @@ humanCheckLoop() {
 }
 
 masterLoop() {
-    Loop, 8
+    Loop, 1 ;8
     {
         skillLoop()
         pickItemLoop()
@@ -91,7 +91,7 @@ masterLoop() {
     qqCheckLoop()
 
     global moveEnable
-    if (moveEnable) 
+    if (!moveEnable) 
     {  
         moveLoop()
     }

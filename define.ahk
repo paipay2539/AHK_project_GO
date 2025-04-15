@@ -16,13 +16,13 @@ config.pixelCheck := Object("color", 0x0000F7, "x1", 1700, "y1", 40, "x2", 1900,
 config.afterSkillDelay := 800
 config.windowName := "GhostOnline"
 
-config.targetPosition := [{x: 1602, y: 270},{x: 1638, y: 285},{x: 1726, y: 283},{x: 1732, y: 270},{x: 1704, y: 257},{x: 1657, y: 224}] ;แมพเกาะผีตาหวาน
+config.targetPosition := [{x: 1517, y: 264},{x: 1583, y: 280},{x: 1655, y: 265},{x: 1740, y: 280}]
 config.movementThreshold := Object()
-config.movementThreshold["arrivedDistX"] := 25  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน X
-config.movementThreshold["arrivedDistY"] := 25  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน Y
-config.movementThreshold["superupDistY"] := 30  ; ระยะที่ต้องใช้คำสั่ง superup
-config.movementThreshold["upupDistY"] := 15     ; ระยะที่ต้องใช้คำสั่ง upup
-config.movementThreshold["moveGainX"] := 1      ; Gain สำหรับการเคลื่อนที่ในแกน X
+config.movementThreshold["arrivedDistX"] := 8  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน X
+config.movementThreshold["arrivedDistY"] := 6  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน Y
+config.movementThreshold["superupDistY"] := 18  ; ระยะที่ต้องใช้คำสั่ง superup
+config.movementThreshold["upupDistY"] := 10     ; ระยะที่ต้องใช้คำสั่ง upup
+config.movementThreshold["moveGainX"] := 27     ; Gain สำหรับการเคลื่อนที่ในแกน X
 
 skillAct := 1
 active := false

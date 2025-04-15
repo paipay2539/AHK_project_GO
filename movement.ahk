@@ -54,7 +54,7 @@ navigateToTarget(currentX, currentY, targetX, targetY) {
 
     ; คำนวณระยะห่างในแกน X และ Y
     deltaX := targetX - currentX
-    deltaY := targetY - currentY
+    deltaY := (targetY - currentY) * -1 ; เปลี่ยนสัญญาณ Y ให้เป็นบวก
 
     ; ตรวจสอบแกน X ก่อน
     if (Abs(deltaX) > arrivedDistX) {
@@ -119,6 +119,9 @@ closedLoopNavigate() {
     ; ดึงตำแหน่งเป้าหมายปัจจุบัน
     targetX := config.targetPosition[targetIndex].x
     targetY := config.targetPosition[targetIndex].y
+    
+    ; For debug
+    ; MouseGetPos, targetX, targetY
 
     ; เรียกใช้ navigateToTarget และตรวจสอบว่าถึงเป้าหมายแล้วหรือยัง
     if (navigateToTarget(currentX, currentY, targetX, targetY)) {
