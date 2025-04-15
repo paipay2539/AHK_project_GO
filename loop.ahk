@@ -48,18 +48,15 @@ pickItemLoop() {
     pressKeyFunction("control", 25)
 }
 
-MoveLoop() {
+moveLoop() {
     global config
     IfWinNotActive, % config.windowName
         Return
     if (checkAnyKeyPress() = 0)
     {
-        static movePattern := ["left", "upup", "right", "right", "down", "superup"]
-        ;static movePattern := ["left", "right", "right", "left"]
-        static index := 0
-        index := Mod(index, movePattern.MaxIndex()) + 1
-        Sleep, 800
-        movementJugde(movePattern[index])
+        Sleep, % config.delayAfterSkillKeys
+        openLoopNavigate()
+        closedLoopNavigate()
     }
     else {
         SendInput, {control up}
@@ -96,6 +93,6 @@ masterLoop() {
     global moveEnable
     if (moveEnable) 
     {  
-        MoveLoop()
+        moveLoop()
     }
 }

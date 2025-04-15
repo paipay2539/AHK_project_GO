@@ -39,12 +39,15 @@ F3::movementJugde("upup")
     ToolTip ; ซ่อน ToolTip
 Return
 F4::
-    centerX, centerY  := currentPosition()
-    MsgBox, %centerX%
+    global config
+    for index, position in config.targetPosition {
+        MouseMove, position.x, position.y, 0 ; ย้ายเมาส์ไปยังตำแหน่ง (x, y) โดยไม่มีการหน่วงเวลา
+        Sleep, 500 ; หยุดที่ตำแหน่งนี้เป็นเวลา 0.5 วินาที (500 มิลลิวินาที)
+    }
 Return
 
 ;######################## Get position ########################
-F5::
+F6::
     global targetPositions
     if !IsObject(targetPositions) ; ตรวจสอบว่าตัวแปร targetPositions ถูกสร้างหรือยัง
         targetPositions := [] ; สร้าง array ถ้ายังไม่มี

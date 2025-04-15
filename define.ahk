@@ -13,10 +13,16 @@ config.restore.push(Object("x", 170, "y", 26, "color", "0xFFBD08", "key", 6))
 config.confirm := Object("x", 333, "y", 473, "color", "0x299CFF")
 config.miniMapWindow := Object("x1", 1400, "y1", 100, "x2", 1900, "y2", 350, "color", "0x00E7FF")
 config.pixelCheck := Object("color", 0x0000F7, "x1", 1700, "y1", 40, "x2", 1900, "y2", 150)
+config.afterSkillDelay := 800
 config.windowName := "GhostOnline"
 
 config.targetPosition := [{x: 1602, y: 270},{x: 1638, y: 285},{x: 1726, y: 283},{x: 1732, y: 270},{x: 1704, y: 257},{x: 1657, y: 224}] ;แมพเกาะผีตาหวาน
-;config.targetPosition.Push({x: 100, y: 200})
+config.movementThreshold := Object()
+config.movementThreshold["arrivedDistX"] := 25  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน X
+config.movementThreshold["arrivedDistY"] := 25  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน Y
+config.movementThreshold["superupDistY"] := 30  ; ระยะที่ต้องใช้คำสั่ง superup
+config.movementThreshold["upupDistY"] := 15     ; ระยะที่ต้องใช้คำสั่ง upup
+config.movementThreshold["moveGainX"] := 1      ; Gain สำหรับการเคลื่อนที่ในแกน X
 
 skillAct := 1
 active := false
