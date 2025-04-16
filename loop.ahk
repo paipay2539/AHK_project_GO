@@ -54,7 +54,7 @@ moveLoop() {
         Return
     if (checkAnyKeyPress() = 0)
     {
-        Sleep, % config.delayAfterSkillKeys
+        Sleep, % config.afterSkillDelay
         ;openLoopNavigate()
         closedLoopNavigate()
     }
@@ -83,7 +83,7 @@ humanCheckLoop() {
 }
 
 masterLoop() {
-    Loop, 1 ;8
+    Loop, 8
     {
         skillLoop()
         pickItemLoop()

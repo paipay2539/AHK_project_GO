@@ -26,6 +26,7 @@ config.movementThreshold["superupDistY"] := 15  ; ระยะที่ต้อ
 config.movementThreshold["upupDistY"] := 8     ; ระยะที่ต้องใช้คำสั่ง upup
 config.movementThreshold["moveGainX"] := 25     ; Gain สำหรับการเคลื่อนที่ในแกน X
 
+skillAct := 1
 active := false
 
 SetEnglishLayout() {

@@ -63,9 +63,9 @@ navigateToTarget(currentX, currentY, targetX, targetY) {
         holdTime := Floor(holdTime) ; ทำให้เป็นจำนวนเต็ม
 
         if (deltaX > 0) {
-            movementJugde("right", holdTime) ; ถ้าอยู่ซ้ายของเป้าหมาย ออกคำสั่ง right พร้อมเวลา
+            movementJugde("right") ; ถ้าอยู่ซ้ายของเป้าหมาย ออกคำสั่ง right พร้อมเวลา
         } else {
-            movementJugde("left", holdTime) ; ถ้าอยู่ขวาของเป้าหมาย ออกคำสั่ง left พร้อมเวลา
+            movementJugde("left") ; ถ้าอยู่ขวาของเป้าหมาย ออกคำสั่ง left พร้อมเวลา
         }
         Return false ; ออกคำสั่งแล้วหยุดการทำงาน
     }
