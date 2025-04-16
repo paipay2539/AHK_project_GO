@@ -69,6 +69,7 @@ Return
 
     ; อัปเดตข้อความในคลิปบอร์ด
     Clipboard := clipboardText
+    debegBeep1()
 Return
 F6::
     global targetPositions
@@ -91,6 +92,7 @@ F6::
 
     ; อัปเดตข้อความในคลิปบอร์ด
     Clipboard := clipboardText
+    debegBeep1()
 Return
 ;######################## ออกจากโปรแกรม ########################
 F12::
@@ -136,4 +138,10 @@ SendInput, {control up} ; ยก Control ขึ้น
 pressKeyFunction("down")
 Return
 
+~Right::
+SendInput, {left up}
+Return
 
+~Left::
+SendInput, {right up}
+Return

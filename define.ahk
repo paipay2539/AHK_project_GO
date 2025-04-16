@@ -16,15 +16,16 @@ config.pixelCheck := Object("color", 0x0000F7, "x1", 1700, "y1", 40, "x2", 1900,
 config.afterSkillDelay := 800
 config.windowName := "GhostOnline"
 
-config.targetPosition := [{x: 1517, y: 264},{x: 1583, y: 280},{x: 1655, y: 265},{x: 1740, y: 280}]
+config.targetPosition := [{x: 1517, y: 264},{x: 1583, y: 280},{x: 1655, y: 265},{x: 1740, y: 280}] ;เกาะตาหวา่น
+config.targetPosition := [{x: 1600, y: 223},{x: 1765, y: 223}] ; สะพานเทพ
+;config.targetPosition := [{x: 1597, y: 223},{x: 1697, y: 223},{x: 1761, y: 223},{x: 1654, y: 223}]
 config.movementThreshold := Object()
 config.movementThreshold["arrivedDistX"] := 8  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน X
-config.movementThreshold["arrivedDistY"] := 6  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน Y
-config.movementThreshold["superupDistY"] := 18  ; ระยะที่ต้องใช้คำสั่ง superup
-config.movementThreshold["upupDistY"] := 10     ; ระยะที่ต้องใช้คำสั่ง upup
-config.movementThreshold["moveGainX"] := 27     ; Gain สำหรับการเคลื่อนที่ในแกน X
+config.movementThreshold["arrivedDistY"] := 5  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน Y
+config.movementThreshold["superupDistY"] := 15  ; ระยะที่ต้องใช้คำสั่ง superup
+config.movementThreshold["upupDistY"] := 8     ; ระยะที่ต้องใช้คำสั่ง upup
+config.movementThreshold["moveGainX"] := 25     ; Gain สำหรับการเคลื่อนที่ในแกน X
 
-skillAct := 1
 active := false
 
 SetEnglishLayout() {
