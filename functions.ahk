@@ -20,10 +20,30 @@ pressKeyFunction(buttonTarget, holdTime := 100, cooldownTime := 10)
     Sleep, %cooldownTime%
 }
 
+pressKeyFunctionToggle(buttonTarget, holdTime := 100) {
+    static isPressing := false ; เก็บสถานะว่ากำลังกดปุ่มอยู่หรือไม่
+    if (isPressing) {
+        SendInput, {left up}
+        SendInput, {right up}
+        isPressing := false ; รีเซ็ตสถานะ
+        Return ; ออกจากฟังก์ชัน
+    }
+    ; หากยังไม่ได้กดปุ่ม ให้เริ่มกดปุ่ม
+    isPressing := true
+
+    if (buttonTarget = "left") {
+        SendInput, {left down}
+        SendInput, {right up}
+    } else if (buttonTarget = "right") {
+        SendInput, {right down}
+        SendInput, {left up}
+    }
+}
+
 checkCooldown(targetKey, checkColor, checkPointX, checkPointY)
 {
-    global skillAct
-    if (checkAnyKeyPress() = 0 && skillAct = 1)
+    global AutoMoveOn
+    if (checkAnyKeyPress() = 0)
     {
         PixelGetColor, color, checkPointX, checkPointY
         if (color = checkColor)

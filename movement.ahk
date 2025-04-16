@@ -26,7 +26,7 @@ movementJugde(movePattern, horizontalHoldTime := 400, verticalHoldTime := 400) {
     }
     ; หากเป็น "left" หรือ "right"
     else {
-        pressKeyFunction(movePattern, horizontalHoldTime) ; กดปุ่ม "left" หรือ "right"
+        pressKeyFunctionToggle(movePattern, horizontalHoldTime) ; กดปุ่ม "left" หรือ "right"
     }
 }
 
@@ -42,7 +42,7 @@ openLoopNavigate() {
 
 ; ########################## Closed-loop position control #########################
 navigateToTarget(currentX, currentY, targetX, targetY) {
-    global config
+    global config, AutoMoveOn
 
     ; ดึงค่าจาก config.movementThreshold
     arrivedDistX := config.movementThreshold.arrivedDistX
@@ -58,17 +58,18 @@ navigateToTarget(currentX, currentY, targetX, targetY) {
 
     ; ตรวจสอบแกน X ก่อน
     if (Abs(deltaX) > arrivedDistX) {
-        ; คำนวณเวลาในการกดปุ่มแกน X
-        holdTime := Abs(deltaX) * moveGainX
-        holdTime := Floor(holdTime) ; ทำให้เป็นจำนวนเต็ม
+        AutoMoveOn := 1 ; เปิดการเคลื่อนที่อัตโนมัติ
 
         if (deltaX > 0) {
-            movementJugde("right", holdTime) ; ถ้าอยู่ซ้ายของเป้าหมาย ออกคำสั่ง right พร้อมเวลา
+            movementJugde("right", 100) ; ถ้าอยู่ซ้ายของเป้าหมาย ออกคำสั่ง right 
         } else {
-            movementJugde("left", holdTime) ; ถ้าอยู่ขวาของเป้าหมาย ออกคำสั่ง left พร้อมเวลา
+            movementJugde("left", 100) ; ถ้าอยู่ขวาของเป้าหมาย ออกคำสั่ง left
         }
         Return false ; ออกคำสั่งแล้วหยุดการทำงาน
     }
+    AutoMoveOn := 0 ; ปิดการเคลื่อนที่อัตโนมัติ
+    SendInput, {left up}
+    SendInput, {right up} ; ปล่อยปุ่ม left และ right
 
     ; ตรวจสอบแกน Y
     if (Abs(deltaY) > arrivedDistY) {
@@ -106,10 +107,10 @@ currentPosition(ByRef x, ByRef y) {
 closedLoopNavigate() {
     global config
     static targetIndex := 1 ; เริ่มต้นที่เป้าหมายแรกใน config.targetPosition
-
+    pressKeyFunction("+") ; กดปุ่ม "+" เพื่อเปิดมินิแมพ
+    
     ; ดึงตำแหน่งปัจจุบัน
     if (!currentPosition(currentX, currentY)) {
-        pressKeyFunction("+")
         ToolTip, กดเปิดมินิแมพที
         Sleep, 1000 ; แสดง ToolTip เป็นเวลา 2 วินาที
         ToolTip ; ซ่อน ToolTip

@@ -49,10 +49,10 @@ pickItemLoop() {
 }
 
 moveLoop() {
-    global config
+    global config, AutoMoveOn
     IfWinNotActive, % config.windowName
         Return
-    if (checkAnyKeyPress() = 0)
+    if (checkAnyKeyPress() = 0 || AutoMoveOn)
     {
         Sleep, % config.delayAfterSkillKeys
         ;openLoopNavigate()
@@ -83,7 +83,7 @@ humanCheckLoop() {
 }
 
 masterLoop() {
-    Loop, 1 ;8
+    Loop, 8
     {
         skillLoop()
         pickItemLoop()
