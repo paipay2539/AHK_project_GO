@@ -1,4 +1,4 @@
-movementJugde(movePattern, horizontalHoldTime := 400, verticalHoldTime := 400) {
+movementJugde(movePattern, horizontalHoldTime := 500, verticalHoldTime := 400) {
     ; ตรวจสอบว่า movePattern เป็นค่าที่กำหนดไว้หรือไม่
     if !(movePattern in "up|upup|superup|down|left|right")
         Return ; หากไม่ใช่ค่า "up", "upup", "down", "left", "right", หรือ "superup" ให้ return ทันที
@@ -94,7 +94,7 @@ navigateToTarget(currentX, currentY, targetX, targetY) {
 
 currentPosition(ByRef x, ByRef y) {
     global config
-    PixelSearch, x, y, config.miniMapWindow.x1, config.miniMapWindow.y1, config.miniMapWindow.x2, config.miniMapWindow.y2, config.miniMapWindow.color, 0, fast
+    PixelSearch, x, y, config.miniMapWindow.x1, config.miniMapWindow.y1, config.miniMapWindow.x2, config.miniMapWindow.y2, config.miniMapWindow.color, 2, fast
     if (ErrorLevel = 0) {
         Return true ; คืนค่า true หากพบพิกเซล
     } else {
@@ -110,7 +110,7 @@ closedLoopNavigate() {
     ; ดึงตำแหน่งปัจจุบัน
     if (!currentPosition(currentX, currentY)) {
         pressKeyFunction("+")
-        ToolTip, กดเปิดมินิแมพที
+        ToolTip, open minimap
         Sleep, 1000 ; แสดง ToolTip เป็นเวลา 2 วินาที
         ToolTip ; ซ่อน ToolTip
         Return

@@ -27,6 +27,7 @@ qqCheckLoop() {
         Return
 
     confirmX := config.confirm.x
+    confirmX2 := config.confirm.x + 1000
     confirmY := config.confirm.y
     confirmColor := config.confirm.color
 
@@ -37,7 +38,7 @@ qqCheckLoop() {
         Sleep, 500
         Click, %confirmX%, %confirmY%
         Sleep, 100
-        Click, %confirmX% * 1.5, %confirmY%
+        Click, %confirmX2%, %confirmY%
     }
 }
 
@@ -45,6 +46,11 @@ pickItemLoop() {
     global config
     IfWinNotActive, % config.windowName
         Return
+    pressKeyFunction("control", 25)
+    pressKeyFunction("control", 25)
+    pressKeyFunction("control", 25)
+    pressKeyFunction("control", 25)
+    pressKeyFunction("control", 25)
     pressKeyFunction("control", 25)
 }
 
@@ -54,7 +60,7 @@ moveLoop() {
         Return
     if (checkAnyKeyPress() = 0)
     {
-        Sleep, % config.afterSkillDelay
+        ;Sleep, % config.afterSkillDelay
         ;openLoopNavigate()
         closedLoopNavigate()
     }
@@ -83,7 +89,7 @@ humanCheckLoop() {
 }
 
 masterLoop() {
-    Loop, 8
+    Loop, 3
     {
         skillLoop()
         pickItemLoop()

@@ -145,3 +145,8 @@ Return
 ~Left::
 SendInput, {right up}
 Return
+
+F8::
+aaaa := currentPosition(x, y)
+ToolTip, %aaaa%
+Return
