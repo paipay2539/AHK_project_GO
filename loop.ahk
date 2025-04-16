@@ -54,7 +54,7 @@ moveLoop() {
         Return
     if (checkAnyKeyPress() = 0 || AutoMoveOn)
     {
-        Sleep, % config.delayAfterSkillKeys
+        Sleep, % config.afterSkillDelay
         ;openLoopNavigate()
         closedLoopNavigate()
     }
