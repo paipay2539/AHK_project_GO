@@ -46,12 +46,7 @@ pickItemLoop() {
     global config
     IfWinNotActive, % config.windowName
         Return
-    pressKeyFunction("control", 25)
-    pressKeyFunction("control", 25)
-    pressKeyFunction("control", 25)
-    pressKeyFunction("control", 25)
-    pressKeyFunction("control", 25)
-    pressKeyFunction("control", 25)
+    pressKeyFunction("control", 25) 
 }
 
 moveLoop() {
@@ -81,7 +76,7 @@ buffLoop() {
 
 humanCheckLoop() {
     global config
-    PixelSearch, foundX, foundY, config.pixelCheck.x1, config.pixelCheck.y1, config.pixelCheck.x2, config.pixelCheck.y2, config.pixelCheck.color, 0, fast
+    PixelSearch, foundX, foundY, config.pixelCheck.x1, config.pixelCheck.y1, config.pixelCheck.x2, config.pixelCheck.y2, config.pixelCheck.color, 2, fast
     if (ErrorLevel = 0)
     {
         debegBeep1()
@@ -89,7 +84,7 @@ humanCheckLoop() {
 }
 
 masterLoop() {
-    Loop, 3
+    Loop, 4
     {
         skillLoop()
         pickItemLoop()

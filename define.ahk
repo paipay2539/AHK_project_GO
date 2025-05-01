@@ -17,10 +17,11 @@ config.afterSkillDelay := 800
 config.windowName := "GhostOnline"
 
 config.targetPosition := [{x: 1517, y: 264},{x: 1583, y: 280},{x: 1655, y: 265},{x: 1740, y: 280}] ;เกาะตาหวา่น
-config.targetPosition := [{x: 1600, y: 223},{x: 1765, y: 223}] ; สะพานเทพ
+config.targetPosition := [{x: 1590, y: 223},{x: 1765, y: 223}] ; สะพานเทพ
+;config.targetPosition := [{x: 1603, y: 252},{x: 1680, y: 252},{x: 1631, y: 252},{x: 1706, y: 252},{x: 1654, y: 252},{x: 1618, y: 252},{x: 1665, y: 252}] ; Road
 ;config.targetPosition := [{x: 1597, y: 223},{x: 1697, y: 223},{x: 1761, y: 223},{x: 1654, y: 223}]
 config.movementThreshold := Object()
-config.movementThreshold["arrivedDistX"] := 8  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน X
+config.movementThreshold["arrivedDistX"] := 10  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน X
 config.movementThreshold["arrivedDistY"] := 5  ; ระยะที่ถือว่า ถึงเป้าหมายในแกน Y
 config.movementThreshold["superupDistY"] := 15  ; ระยะที่ต้องใช้คำสั่ง superup
 config.movementThreshold["upupDistY"] := 8     ; ระยะที่ต้องใช้คำสั่ง upup

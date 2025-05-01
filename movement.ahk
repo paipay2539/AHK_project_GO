@@ -1,4 +1,4 @@
-movementJugde(movePattern, horizontalHoldTime := 500, verticalHoldTime := 400) {
+movementJugde(movePattern, horizontalHoldTime := 600, verticalHoldTime := 400) {
     ; ตรวจสอบว่า movePattern เป็นค่าที่กำหนดไว้หรือไม่
     if !(movePattern in "up|upup|superup|down|left|right")
         Return ; หากไม่ใช่ค่า "up", "upup", "down", "left", "right", หรือ "superup" ให้ return ทันที
